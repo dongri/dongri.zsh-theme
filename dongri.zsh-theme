@@ -27,3 +27,18 @@ function git_prompt_info() {
     echo "%{$fg_bold[blue]%}git:(%{$fg[green]%}${current_branch}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
   fi
 }
+
+# Complete the current branch name when Tab is pressed after `git push|pull|fetch <remote> `
+function _dongri_complete_current_branch() {
+  if [[ "$LBUFFER" =~ '^git (push|pull|fetch) [^ ]+ $' ]]; then
+    local current_branch
+    current_branch=$(command git symbolic-ref --short HEAD 2>/dev/null)
+    if [[ -n "$current_branch" ]]; then
+      LBUFFER="${LBUFFER}${current_branch}"
+      return
+    fi
+  fi
+  zle expand-or-complete
+}
+zle -N _dongri_complete_current_branch
+bindkey '^I' _dongri_complete_current_branch
