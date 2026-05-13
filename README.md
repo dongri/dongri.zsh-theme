@@ -2,7 +2,7 @@
 
 An oh-my-zsh theme that shows both the default branch and current branch.
 
-![preview](screenshots/preview.png)
+![git](screenshots/git.png)
 
 ## Features
 
